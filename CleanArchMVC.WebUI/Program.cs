@@ -1,3 +1,4 @@
+using CleanArchMVC.Domain.Account;
 using CleanArchMVC.Infra.IoC;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
@@ -30,6 +31,8 @@ namespace CleanArchMVC.WebUI
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            SeedUserRoles(app);
             
             app.UseAuthentication();
             app.UseAuthorization();
@@ -39,6 +42,17 @@ namespace CleanArchMVC.WebUI
                 pattern: "{controller=Home}/{action=Index}/{id?}");
 
             app.Run();
+        }
+
+        private static void SeedUserRoles(IApplicationBuilder app)
+        {
+            using(var serviceScope = app.ApplicationServices.CreateScope())
+            {
+                var seed = serviceScope.ServiceProvider.GetService<ISeedUserRoleInitial>();
+
+                seed.SeedRoles();
+                seed.SeedUsers();
+            }
         }
     }
 }
