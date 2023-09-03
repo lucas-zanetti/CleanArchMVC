@@ -1,3 +1,5 @@
+using CleanArchMVC.Infra.IoC;
+
 namespace CleanArchMVC.API
 {
     public class Program
@@ -5,6 +7,8 @@ namespace CleanArchMVC.API
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            builder.Services.AddInfrastructureAPI(builder.Configuration);
 
             // Add services to the container.
 
