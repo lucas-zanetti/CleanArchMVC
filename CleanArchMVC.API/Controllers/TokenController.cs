@@ -1,5 +1,7 @@
 ﻿using CleanArchMVC.API.Models;
 using CleanArchMVC.Domain.Account;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -26,6 +28,7 @@ namespace CleanArchMVC.API.Controllers
             _configuration = configuration;
         }
 
+        [AllowAnonymous]
         [HttpPost("LoginUser")]
         public async Task<ActionResult<UserToken>> LoginAsync([FromBody] LoginModel userInfo)
         {
@@ -44,6 +47,7 @@ namespace CleanArchMVC.API.Controllers
         }
 
         [HttpPost("CreateUser")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         //Used to hide API on Swagger
         //[ApiExplorerSettings(IgnoreApi = true)]
         public async Task<ActionResult> CreateUserAsync([FromBody] LoginModel userInfo)
