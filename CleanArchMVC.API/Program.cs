@@ -13,6 +13,7 @@ namespace CleanArchMVC.API
 
             builder.Services.AddInfrastructureAPI(builder.Configuration);
             builder.Services.AddInfrastructureJWT(builder.Configuration);
+            builder.Services.AddInfrastructureSwagger();
 
             // Add services to the container.
 
