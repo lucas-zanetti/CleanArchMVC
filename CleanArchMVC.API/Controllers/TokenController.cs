@@ -43,6 +43,25 @@ namespace CleanArchMVC.API.Controllers
             }
         }
 
+        [HttpPost("CreateUser")]
+        //Used to hide API on Swagger
+        //[ApiExplorerSettings(IgnoreApi = true)]
+        public async Task<ActionResult> CreateUserAsync([FromBody] LoginModel userInfo)
+        {
+            if (userInfo == null)
+                return BadRequest("Invalid user info!");
+
+            var result = await _authentication.RegisterUserAsync(userInfo.Email, userInfo.Password);
+
+            if (result)
+                return Ok($"User {userInfo.Email} was created successfully!");
+            else
+            {
+                ModelState.AddModelError(string.Empty, "User couldn't be created.");
+                return BadRequest();
+            }
+        }
+
         private UserToken GenerateToken(LoginModel userInfo)
         {
             var claims = new Claim[]
