@@ -12,6 +12,7 @@ namespace CleanArchMVC.API
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddInfrastructureAPI(builder.Configuration);
+            builder.Services.AddInfrastructureJWT(builder.Configuration);
 
             // Add services to the container.
 
